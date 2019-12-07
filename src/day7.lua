@@ -44,17 +44,10 @@ for n in helper.perm{5,6,7,8,9} do
 	local programs = {}
 	for i=1,5 do
 		local o = i % 5 + 1
-		programs[i] = intcode.iterate_program(program,pipes[o].output,pipes[i].input)
+		programs[i] = intcode.make_program_iterator(program,pipes[o].output,pipes[i].input)
 	end
 
-	local done = false
-	while not done do
-		done = true
-		for i=1,5 do
-			local code, res = programs[i]()
-			if code then done = false end
-		end
-	end
+	intcode.run_program_iterator_list(programs)
 
 	local output = linkedlist.popright(outputll)
 

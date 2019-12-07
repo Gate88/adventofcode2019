@@ -12,7 +12,7 @@ local function sanitize(m)
 	return (not m or m == "") and 0 or m+0
 end
 
-function intcode.iterate_program(program, output, input, modify, delay_run)
+function intcode.make_program_iterator(program, output, input, modify, delay_run)
 	return intcode.run_program(program, output, input, modify, true)
 end
 
@@ -22,6 +22,7 @@ function intcode.run_program(program, output, input, modify, delay_run)
 	modify = modify or empty
 	input = input or empty
 
+	--parse program into memory
 	for n in string.gmatch(program, "[^,]+") do
 		p[i] = n+0
 		i = i + 1
@@ -114,6 +115,17 @@ function intcode.run_program(program, output, input, modify, delay_run)
 		end
 	else
 		return run()
+	end
+end
+
+function intcode.run_program_iterator_list(pl)
+	local done = false
+	while not done do
+		done = true
+		for _,p in ipairs(pl) do
+			local code, res = p()
+			if code then done = false end
+		end
 	end
 end
 
