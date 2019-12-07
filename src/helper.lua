@@ -43,5 +43,27 @@ function helper.copy(obj)
   return res
 end
 
+--thanks lua docs
+function helper.permgen(a,n)
+  if n == 0 then
+    coroutine.yield(a)
+  else
+    for i=1,n do
+      a[n], a[i] = a[i], a[n]
+      helper.permgen(a, n - 1)
+      a[n], a[i] = a[i], a[n]
+    end
+  end
+end
+
+function helper.perm(a)
+  local n = #a
+  local co = coroutine.create(function() helper.permgen(a,n) end)
+  return function()
+    local code, res = coroutine.resume(co)
+    return res
+  end
+end
+
 return helper
 

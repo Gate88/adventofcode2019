@@ -1,6 +1,6 @@
 local linkedlist = {}
 
-function linkedlist.new ()
+function linkedlist.new()
   return {first = 0, last = -1}
 end
 
@@ -32,6 +32,10 @@ function linkedlist.popright (list)
   list[last] = nil         -- to allow garbage collection
   list.last = last - 1
   return value
+end
+
+function linkedlist.empty(list)
+  return list.first > list.last
 end
 
 return linkedlist
