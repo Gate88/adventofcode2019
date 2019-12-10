@@ -4,7 +4,7 @@ input_s = io.read("*all")
 function run_program(program, modify)
 	local p, i = {}, 0
 	for n in string.gmatch(program, "[^,]+") do
-		p[i] = n+0
+		p[i] = tonumber(n)
 		i = i + 1
 	end
 

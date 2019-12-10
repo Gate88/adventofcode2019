@@ -52,7 +52,7 @@ function apply_from_path(path, f)
 end
 
 function manhattan_distance(s)
-	local x,y = unpack(s)
+	local x,y = table.unpack(s)
 	return math.abs(x)+math.abs(y)
 end
 
